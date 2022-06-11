@@ -1,6 +1,7 @@
 ﻿// Sharipov 220 Chess-3 13.04
 
 using System;
+
 namespace Chess
 {
     public abstract class Piece
@@ -30,6 +31,9 @@ namespace Chess
         public static Tuple<int, int> ParseCoordinates(string coordinates) =>
             new(coordinates.ToUpper()[0] - 65,
                 coordinates[1] - 49);
+
+        public static string GetCoordinates(int col, int row) => $"{(char)(col + 65)}{row + 1}";
+
 
         private bool IsRightMove(int col, int row)
         {
