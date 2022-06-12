@@ -16,12 +16,17 @@ namespace Chess.WPFApplication
     {
         private static readonly Style BlackStyle;
         private static readonly Style WhiteStyle;
+        private static readonly Color BlackColor;
+        private static readonly Color WhiteColor;
 
         private readonly ChessBoard _board;
         private Piece _currentPiece;
 
         static MainWindow()
         {
+            BlackColor = Color.FromRgb(181, 73, 1);
+            WhiteColor = Color.FromRgb(231, 172, 113);
+            
             var baseStyle = new Style();
             baseStyle.Setters.Add(new Setter
             {
@@ -38,29 +43,34 @@ namespace Chess.WPFApplication
             BlackStyle.Setters.Add(new Setter
             {
                 Property = BackgroundProperty,
-                Value = new SolidColorBrush(Colors.Black)
+                Value = new SolidColorBrush(BlackColor)
             });
             BlackStyle.Setters.Add(new Setter
             {
                 Property = ForegroundProperty,
-                Value = new SolidColorBrush(Colors.White)
+                Value = new SolidColorBrush(WhiteColor)
             });
             BlackStyle.Setters.Add(new Setter
             {
                 Property = BorderBrushProperty,
-                Value = new SolidColorBrush(Colors.White)
+                Value = new SolidColorBrush(WhiteColor)
             });
 
             WhiteStyle = new Style { BasedOn = baseStyle };
             WhiteStyle.Setters.Add(new Setter
             {
                 Property = BackgroundProperty,
-                Value = new SolidColorBrush(Colors.White)
+                Value = new SolidColorBrush(WhiteColor)
             });
             WhiteStyle.Setters.Add(new Setter
             {
                 Property = ForegroundProperty,
-                Value = new SolidColorBrush(Colors.Black)
+                Value = new SolidColorBrush(BlackColor)
+            });
+            WhiteStyle.Setters.Add(new Setter
+            {
+                Property = BorderBrushProperty,
+                Value = new SolidColorBrush(BlackColor)
             });
         }
 
@@ -136,6 +146,11 @@ namespace Chess.WPFApplication
                     }
                 }
             }
+            else if (e.RightButton == MouseButtonState.Pressed)
+            {
+                _board.RemovePiece(cell.Col, cell.Row);
+                LoadBoard();
+            }
         }
 
         private Style GetCellDefaultStyle(int col, int row)
@@ -148,8 +163,8 @@ namespace Chess.WPFApplication
         private SolidColorBrush GetCellDefaultBackground(int col, int row)
         {
             if ((col + row) % 2 == 0)
-                return new SolidColorBrush(Colors.White);
-            return new SolidColorBrush(Colors.Black);
+                return new SolidColorBrush(WhiteColor);
+            return new SolidColorBrush(BlackColor);
         }
 
         private ChessCell GetCellByCoordinates(int col, int row)
@@ -173,6 +188,22 @@ namespace Chess.WPFApplication
                     cell.BorderBrush = new SolidColorBrush(Colors.Black);
                     cell.BorderThickness = new Thickness(2);
                 }
+            }
+        }
+
+        private void btn_AddFigure_Click(object sender, RoutedEventArgs e)
+        {
+            TeamColor color = Combo_ColorSelection.Text == "Black" ? TeamColor.Black : TeamColor.White;
+            var figureName = Combo_FigureSelection.Text;
+
+            try 
+            {
+                _board.AddPiece(color, figureName, textBox_Coordinates.Text);
+                LoadBoard();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

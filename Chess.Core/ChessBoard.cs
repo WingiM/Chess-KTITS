@@ -88,6 +88,21 @@ namespace Chess.Core
             AddPiece(color, ChessPiecesCode[code], coordinates);
         }
 
+        public void RemovePiece(int col, int row)
+        {
+            RemovePiece(Piece.ParseCoordinates(col, row));
+        }
+
+        public void RemovePiece(string coordinates)
+        {
+            if (GetPieceOnCell(coordinates) is null)
+                return;
+            
+            var piece =
+                _pieces.FirstOrDefault(p => p.Coordinates.Equals(coordinates));
+            _pieces.Remove(piece);
+        }
+
         public Piece GetPieceOnCell(string coordinates)
         {
             return _pieces.FirstOrDefault(

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Chess.WPFApplication"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200"
-        Background="Aqua">
+        Background="#E7AC71">
     <Window.Resources>
         <Style x:Key="FieldTextBox">
             <Setter Property="TextBlock.Margin" Value="5" />
@@ -14,6 +14,7 @@
             <Setter Property="TextBlock.TextAlignment" Value="Center" />
             <Setter Property="TextBlock.Focusable" Value="False"/>
             <Setter Property="TextBlock.Cursor" Value="Arrow"/>
+            <Setter Property="TextBox.VerticalContentAlignment" Value="Center"/>
         </Style>
         <Style x:Key="FieldTextBoxReversed" BasedOn="{StaticResource FieldTextBox}">
             <Setter Property="TextBlock.LayoutTransform">
@@ -21,6 +22,11 @@
                     <RotateTransform Angle="180"/>
                 </Setter.Value>
             </Setter>
+        </Style>
+        <Style x:Key="ComboBox">
+            <Setter Property="ComboBox.HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="ComboBox.VerticalContentAlignment" Value="Center"/>
+            <Setter Property="ComboBox.FontSize" Value="24"/>
         </Style>
     </Window.Resources>
     <Grid>
@@ -109,6 +115,21 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
         </Grid>
+        <ComboBox Style="{StaticResource ComboBox}" x:Name="Combo_FigureSelection" Grid.Column="10" Grid.Row="2" Margin="0,0,0,85" Grid.RowSpan="2">
+            <TextBlock>King</TextBlock>
+            <TextBlock>Queen</TextBlock>
+            <TextBlock>Bishop</TextBlock>
+            <TextBlock>Knight</TextBlock>
+            <TextBlock>Rook</TextBlock>
+            <TextBlock>Pawn</TextBlock>
+        </ComboBox>
+        <ComboBox Style="{StaticResource ComboBox}" x:Name="Combo_ColorSelection" Grid.Column="10" Margin="0,49,0,85" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="50" FontSize="24">
+            <TextBlock>Black</TextBlock>
+            <TextBlock>White</TextBlock>
+        </ComboBox>
+        <Button x:Name="btn_AddFigure" Content="Добавить фигуру" Grid.Column="10" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" FontSize="24" Click="btn_AddFigure_Click"/>
+        <TextBox x:Name="textBox_Coordinates" Grid.Column="10" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Width="230" FontSize="24"/>
+        <Label Content="ПКМ - удалить фигуру" Grid.Column="10" HorizontalAlignment="Center" Grid.Row="8" VerticalAlignment="Center" FontSize="24"/>
 
     </Grid>
 </Window>
