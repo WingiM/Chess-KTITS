@@ -5,10 +5,110 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess.WPFApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="1200"
+        Background="Aqua">
+    <Window.Resources>
+        <Style x:Key="FieldTextBox">
+            <Setter Property="TextBlock.Margin" Value="5" />
+            <Setter Property="TextBlock.FontSize" Value="24"/>
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="TextBlock.Focusable" Value="False"/>
+            <Setter Property="TextBlock.Cursor" Value="Arrow"/>
+        </Style>
+        <Style x:Key="FieldTextBoxReversed" BasedOn="{StaticResource FieldTextBox}">
+            <Setter Property="TextBlock.LayoutTransform">
+                <Setter.Value>
+                    <RotateTransform Angle="180"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Row="9" Grid.Column="1">A</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Row="9" Grid.Column="2">B</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Row="9" Grid.Column="3">C</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Row="9" Grid.Column="4">D</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Row="9" Grid.Column="5">E</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Row="9" Grid.Column="6">F</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Row="9" Grid.Column="7">G</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Row="9" Grid.Column="8">H</TextBox>
+
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Row="0" Grid.Column="1">A</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Row="0" Grid.Column="2">B</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Row="0" Grid.Column="3">C</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Row="0" Grid.Column="4">D</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Row="0" Grid.Column="5">E</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Row="0" Grid.Column="6">F</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Row="0" Grid.Column="7">G</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Row="0" Grid.Column="8">H</TextBox>
+
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Column="0" Grid.Row="1">8</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Column="0" Grid.Row="2">7</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Column="0" Grid.Row="3">6</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Column="0" Grid.Row="4">5</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Column="0" Grid.Row="5">4</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Column="0" Grid.Row="6">3</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Column="0" Grid.Row="7">2</TextBox>
+        <TextBox Style="{StaticResource FieldTextBox}" Grid.Column="0" Grid.Row="8">1</TextBox>
+
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Column="9" Grid.Row="1">8</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Column="9" Grid.Row="2">7</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Column="9" Grid.Row="3">6</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Column="9" Grid.Row="4">5</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Column="9" Grid.Row="5">4</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Column="9" Grid.Row="6">3</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Column="9" Grid.Row="7">2</TextBox>
+        <TextBox Style="{StaticResource FieldTextBoxReversed}" Grid.Column="9" Grid.Row="8">1</TextBox>
+
+        <Grid x:Name="ChessGrid" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="8" Grid.RowSpan="8">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+
     </Grid>
 </Window>
