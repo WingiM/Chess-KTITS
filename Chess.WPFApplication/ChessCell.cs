@@ -13,6 +13,5 @@ namespace Chess.WPFApplication
             Col = col;
             Row = Piece.ChessBoardSize - row - 1;
         }
-        
     }
 }

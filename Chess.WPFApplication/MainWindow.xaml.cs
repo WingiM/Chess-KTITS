@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Chess.Core;
 using Chess.Core.Figures;
 
@@ -26,7 +28,7 @@ namespace Chess.WPFApplication
         {
             BlackColor = Color.FromRgb(181, 73, 1);
             WhiteColor = Color.FromRgb(231, 172, 113);
-            
+
             var baseStyle = new Style();
             baseStyle.Setters.Add(new Setter
             {
@@ -97,7 +99,14 @@ namespace Chess.WPFApplication
             {
                 (int col, int row) = piece.NumericCoordinates;
                 var cell = GetCellByCoordinates(col, row);
-                cell!.Content = $"{piece.Color}\n{piece.FigureName}";
+                var uri = ChessGrid
+                    .Resources[$"{piece.Color}{piece.GetType().Name}Uri"];
+                cell!.Content = uri is null
+                    ? $"{piece.Color}{piece.FigureName}"
+                    : new Image
+                    {
+                        Source = new BitmapImage(new Uri(uri.ToString()))
+                    };
             }
         }
 
@@ -173,7 +182,7 @@ namespace Chess.WPFApplication
                 .Cast<ChessCell>()
                 .First(c => c.Col == col && c.Row == row);
         }
-        
+
         private void PaintCellsToMove()
         {
             if (_currentPiece is null)
@@ -193,10 +202,12 @@ namespace Chess.WPFApplication
 
         private void btn_AddFigure_Click(object sender, RoutedEventArgs e)
         {
-            TeamColor color = Combo_ColorSelection.Text == "Black" ? TeamColor.Black : TeamColor.White;
+            TeamColor color = Combo_ColorSelection.Text == "Black"
+                ? TeamColor.Black
+                : TeamColor.White;
             var figureName = Combo_FigureSelection.Text;
 
-            try 
+            try
             {
                 _board.AddPiece(color, figureName, textBox_Coordinates.Text);
                 LoadBoard();
