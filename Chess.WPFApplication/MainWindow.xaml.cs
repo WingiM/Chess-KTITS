@@ -111,7 +111,7 @@ namespace Chess.WPFApplication
                 LoadBoard();
             }
         }
-        
+
         private SolidColorBrush GetCellDefaultBackground(int col, int row)
         {
             if ((col + row) % 2 != 0)
@@ -152,7 +152,7 @@ namespace Chess.WPFApplication
 
             try
             {
-                _board.AddPiece(color, figureName, textBox_Coordinates.Text);
+                _board.AddPiece(color, figureName, textBox_Coordinates.Text.ToUpper());
                 LoadBoard();
             }
             catch (Exception ex)
