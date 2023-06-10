@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using Chess.Core.Figures;
 
 namespace Chess.ConsoleApplication
 {

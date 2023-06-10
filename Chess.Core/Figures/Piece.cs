@@ -2,17 +2,19 @@
 
 using System;
 
-namespace Chess
+namespace Chess.Core.Figures
 {
     public abstract class Piece
     {
-        protected readonly TeamColor Color;
-        protected char FigureName;
+        public const int ChessBoardSize = 8;
+        public TeamColor Color { get; }
+        public char FigureName { get; init; }
 
         protected int Col;
         protected int Row;
 
         public string Coordinates => $"{(char)(Col + 65)}{Row + 1}";
+        public Tuple<int, int> NumericCoordinates => new Tuple<int, int>(Col, Row);
 
         protected Piece(TeamColor color, string coordinates)
         {
@@ -25,14 +27,13 @@ namespace Chess
             }
         }
 
-        private bool IsRightCoordinate(int coordinate) => coordinate >= 0
-                                                          && coordinate <= 7;
+        private bool IsRightCoordinate(int coordinate) => coordinate is >= 0 and < ChessBoardSize;
 
         public static Tuple<int, int> ParseCoordinates(string coordinates) =>
             new(coordinates.ToUpper()[0] - 65,
                 coordinates[1] - 49);
 
-        public static string GetCoordinates(int col, int row) => $"{(char)(col + 65)}{row + 1}";
+        public static string ParseCoordinates(int col, int row) => $"{(char)(col + 65)}{row + 1}";
 
 
         private bool IsRightMove(int col, int row)
@@ -53,20 +54,21 @@ namespace Chess
 
         protected abstract bool CheckRightMove(int col, int row);
 
-        public void Move(string coordinates)
+        public bool Move(string coordinates)
         {
             var (newCol, newRow) = ParseCoordinates(coordinates);
-            Move(newCol, newRow);
+            return Move(newCol, newRow);
         }
 
-        public void Move(int col, int row)
+        public bool Move(int col, int row)
         {
             if (!IsRightMove(col, row))
             {
-                return;
+                return false;
             }
 
             (this.Col, this.Row) = (col, row);
+            return true;
         }
 
         public override string ToString()

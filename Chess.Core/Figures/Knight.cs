@@ -1,7 +1,8 @@
 ﻿// Sharipov 220 Chess-3 13.04
 
 using System;
-namespace Chess
+
+namespace Chess.Core.Figures
 {
     public class Knight : Piece
     {

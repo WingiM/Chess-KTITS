@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Chess.Core.Figures;
 
 namespace Chess.Core
 {
@@ -29,13 +30,23 @@ namespace Chess.Core
             };
         }
 
-        public void AddFigure(TeamColor color, ChessPieces pieceCode, string position)
+        public ChessBoard(bool fillDefault = false)
         {
-            if (_pieces.FirstOrDefault(p => p.Coordinates.Equals(position)) is not null)
+            _pieces = new();
+
+            if (fillDefault)
+                FillBoardDefault();
+        }
+
+        public void AddPiece(TeamColor color, ChessPieces pieceCode,
+            string position)
+        {
+            if (_pieces.FirstOrDefault(p => p.Coordinates.Equals(position)) is
+                not null)
             {
                 throw new Exception("Position already taken");
             }
-            
+
             switch (pieceCode)
             {
                 case ChessPieces.King:
@@ -62,32 +73,80 @@ namespace Chess.Core
             }
         }
 
-        public void AddFigure(TeamColor color, ChessPieces code, int x, int y)
+        public void AddPiece(TeamColor color, ChessPieces code, int x, int y)
         {
-            AddFigure(color, code, Piece.GetCoordinates(x, y));
+            AddPiece(color, code, Piece.ParseCoordinates(x, y));
         }
 
-        public void AddFigure(TeamColor color, string code, int x, int y)
+        public void AddPiece(TeamColor color, string code, int x, int y)
         {
-            AddFigure(color, ChessPiecesCode[code], x, y);
+            AddPiece(color, ChessPiecesCode[code], x, y);
         }
 
-        public void AddFigure(TeamColor color, string code, string coordinates)
+        public void AddPiece(TeamColor color, string code, string coordinates)
         {
-            AddFigure(color, ChessPiecesCode[code], coordinates);
+            AddPiece(color, ChessPiecesCode[code], coordinates);
         }
 
-        public ChessBoard(bool fillDefault = false)
+        public void RemovePiece(int col, int row)
         {
-            _pieces = new();
+            RemovePiece(Piece.ParseCoordinates(col, row));
+        }
 
-            if (fillDefault)
-                FillBoardDefault();
+        public void RemovePiece(string coordinates)
+        {
+            if (GetPieceOnCell(coordinates) is null)
+                return;
+            
+            var piece =
+                _pieces.FirstOrDefault(p => p.Coordinates.Equals(coordinates));
+            _pieces.Remove(piece);
         }
 
         public Piece GetPieceOnCell(string coordinates)
         {
-            return _pieces.FirstOrDefault(p => p.Coordinates.Equals(coordinates));
+            return _pieces.FirstOrDefault(
+                p => p.Coordinates.Equals(coordinates));
+        }
+
+        public Piece GetPieceOnCell(int col, int row)
+        {
+            var coordinates = Piece.ParseCoordinates(col, row);
+            return _pieces.FirstOrDefault(
+                p => p.Coordinates.Equals(coordinates));
+        }
+
+        public bool CanPieceMove(Piece piece, int col, int row)
+        {
+            return CanPieceMove(piece, Piece.ParseCoordinates(col, row));
+        }
+
+        public bool CanPieceMove(Piece piece, string coordinates)
+        {
+            var targetPiece = GetPieceOnCell(coordinates);
+            if (targetPiece is not null && targetPiece.Color == piece.Color)
+                return false;
+            return piece.IsRightMove(coordinates);
+        }
+
+        public bool MovePiece(Piece piece, int col, int row)
+        {
+            return MovePiece(piece, Piece.ParseCoordinates(col, row));
+        }
+
+        public bool MovePiece(Piece piece, string coordinates)
+        {
+            if (!CanPieceMove(piece, coordinates))
+                return false;
+
+            var targetPiece =
+                _pieces.FirstOrDefault(p => p.Coordinates == coordinates);
+            if (targetPiece is not null && targetPiece.Color != piece.Color)
+            {
+                _pieces.Remove(targetPiece);
+            }
+
+            return piece.Move(coordinates);
         }
 
         private void FillBoardDefault()
@@ -95,7 +154,7 @@ namespace Chess.Core
             for (char i = 'A'; i < 'I'; i++)
             {
                 _pieces.Add(new Pawn(TeamColor.Black, $"{i}7"));
-                _pieces.Add(new Pawn(TeamColor.Black, $"{i}2"));
+                _pieces.Add(new Pawn(TeamColor.White, $"{i}2"));
             }
 
             _pieces.Add(new Rook(TeamColor.Black, "A8"));
@@ -106,7 +165,7 @@ namespace Chess.Core
             _pieces.Add(new Bishop(TeamColor.Black, "F8"));
             _pieces.Add(new Queen(TeamColor.Black, "D8"));
             _pieces.Add(new King(TeamColor.Black, "E8"));
-            
+
             _pieces.Add(new Rook(TeamColor.White, "A1"));
             _pieces.Add(new Rook(TeamColor.White, "H1"));
             _pieces.Add(new Knight(TeamColor.White, "B1"));

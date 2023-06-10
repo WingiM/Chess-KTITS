@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="images\bB.png" />
+      <None Remove="images\bK.png" />
+      <None Remove="images\bN.png" />
+      <None Remove="images\bP.png" />
+      <None Remove="images\bQ.png" />
+      <None Remove="images\bR.png" />
+      <None Remove="images\wB.png" />
+      <None Remove="images\wK.png" />
+      <None Remove="images\wN.png" />
+      <None Remove="images\wP.png" />
+      <None Remove="images\wQ.png" />
+      <None Remove="images\wR.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Chess.Core\Chess.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="images\bB.png" />
+      <Resource Include="images\bK.png" />
+      <Resource Include="images\bN.png" />
+      <Resource Include="images\bP.png" />
+      <Resource Include="images\bQ.png" />
+      <Resource Include="images\bR.png" />
+      <Resource Include="images\wB.png" />
+      <Resource Include="images\wK.png" />
+      <Resource Include="images\wN.png" />
+      <Resource Include="images\wP.png" />
+      <Resource Include="images\wQ.png" />
+      <Resource Include="images\wR.png" />
+    </ItemGroup>
+
+</Project>
